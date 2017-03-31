@@ -5,6 +5,7 @@ from notes.models import Notes
 
 class NotesViewsTestCase(TestCase):
     def test_index(self):
+        fixtures = ['first_notes.json']
         note_1 = Notes.objects.create(
                 name="first note",
                 body="This is the test for the notes",
