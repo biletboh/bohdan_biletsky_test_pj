@@ -6,14 +6,15 @@
     {%for note in object_list%}
     <div class="row">
       <div class="col-md-12">
-        {{note.name}}
+        <h3>{{note.name}}</h2>
       </div>
     </div>
     <div class="row">
       <div class="col-md-12">
-        {{note.body}}
+        <p>{{note.body}}</p>
       </div>
     </div>
+    <hr>
     {%endfor%}
   </div>
 </div>
