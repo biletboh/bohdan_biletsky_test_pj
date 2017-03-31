@@ -1,0 +1,20 @@
+[
+  {
+    "model": "notes.notes",
+    "pk": 1,
+    "fields":
+    {
+      "name": "You may create you notes here",
+      "body": "Your notes may contain a lot of important thoughs, ideas, thigs to do, etc."
+    }
+  },
+  {
+    "model": "notes.notes",
+    "pk": 2,
+    "fields":
+    {
+      "name": "Notes are handy",
+      "body": "Notes help you remember everything. Notes help to keep track of your performance. Notes organize you."
+    }
+  }
+]
