@@ -2,8 +2,19 @@
 
 {%block content%}
 <div class="container">
-  <div class="jumbotron">
-    hello
+  <div class="box jumbotron">
+    {%for note in object_list%}
+    <div class="row">
+      <div class="col-md-12">
+        {{note.name}}
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-12">
+        {{note.body}}
+      </div>
+    </div>
+    {%endfor%}
   </div>
 </div>
 
