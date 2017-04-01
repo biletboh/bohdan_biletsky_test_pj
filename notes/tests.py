@@ -3,7 +3,15 @@ from django.test import TestCase
 from notes.models import Notes
 
 
+class NotesModelTestCase(TestCase):
+
+    def test_string_representation(self):
+        note = Notes(name="Test Note")
+        self.assertEqual(str(note), note.name)
+
+
 class NotesViewsTestCase(TestCase):
+
     def test_index(self):
         fixtures = ['first_notes.json']
         note_1 = Notes.objects.create(
