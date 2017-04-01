@@ -2,7 +2,11 @@
 <div class="notes">
   <div class="row">
     <div class="col-md-12">
-      <h3><strong>{{note.name}}</strong></h3>
+      <ul class="list-unstyled list-inline">
+        <li><h3><strong>{{note.name}}</strong></h3></li>
+        <li><a class="btn" href="{% url 'notes:update_notes' note.pk%}" role="button">
+          <i class="fa fa-lg fa-pencil-square-o" aria-hidden="true"></i>
+        </a></li>
     </div>
   </div>
   <hr>
