@@ -29,39 +29,25 @@ class NotesListTestCase(TestCase):
 
 class NotesFormTestCase(TestCase):
 
-    def setUp(self):
-        self.note = Notes.objects.create(name='Test form note', body='This is the body of test form note') 
-
-    def test_form(self):
-        NotesForm(note=self.note)
-
-    def test_init_without_entry(self):
-        with self.assertRaises(KeyError):
-            NotesForm()
-
     def test_valid_data(self):
         form = NotesForm({
-            'name': "Test note",
-            'body': "Hi there",
+            'name': "Test notes for all",
+            'body': "Hi there. Thist is the test note",
             })
-    self.assertTrue(form.is_valid())
-    note = form.save()
-    self.assertEqual(comment.name, "Test note")
-    self.assertEqual(comment.body, "Hi there")
-    
+        self.assertTrue(form.is_valid())
+
     def test_blank_data(self):
         form = NotesForm({})
         self.assertFalse(form.is_valid())
         self.assertEqual(form.errors, {
-            'name': ['required'],
-            'body': ['required'],
+            'name': ['This field is required.'],
+            'body': ['This field is required.'],
             })
 
         
 class NotesCreateTestCase(TestCase):
 
     def setUp(self):
-        self.request = HttpRequest()
         self.form = NotesForm() 
 
     def test_create(self):
