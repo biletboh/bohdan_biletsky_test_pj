@@ -1,0 +1,16 @@
+{%for note in notes%}
+<div class="notes">
+  <div class="row">
+    <div class="col-md-12">
+      <h3><strong>{{note.name}}</strong></h3>
+    </div>
+  </div>
+  <hr>
+  <div class="row">
+    <div class="col-md-12">
+      <p>{{note.body}}</p>
+    </div>
+  </div>
+</div>
+{%endfor%}
+
