@@ -5,6 +5,7 @@ from django.test import TestCase
 from notes.models import Notes
 from notes.models import Upper 
 from notes.forms import NotesForm
+from notes.forms import UpperForm 
 
 
 class UpperCaseModelTestCase(TestCase):
@@ -12,8 +13,13 @@ class UpperCaseModelTestCase(TestCase):
     def test_string_representation(self):
         value = 'Test UpPercaSe' 
         note = Upper.objects.create(name=value)
-        print("This is the %s" %note.name)
         self.assertEqual(value.upper(), note.name)
+    
+    def test_upper_form(self):
+        form_data = {'name': 'something'}
+        form = UpperForm(data=form_data)
+        self.assertTrue(form.is_valid())
+
 
 
 class UpperModelTestCase(TestCase):

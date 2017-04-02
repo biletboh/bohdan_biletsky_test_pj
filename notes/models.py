@@ -15,6 +15,12 @@ class UpperCaseCharField(models.CharField):
         setattr(model_instance, self.attname, value)
         return getattr(model_instance, self.attname) 
 
+    def formfield(self, **kwargs):
+        from django.forms import CharField
+        defaults = {'form_class': CharField}
+        defaults.update(kwargs)
+        return super(UpperCaseCharField, self).formfield(**defaults)
+
 
 class Notes(models.Model):
     name = models.CharField(max_length=128)
