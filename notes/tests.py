@@ -3,10 +3,20 @@ from django.urls import reverse
 from django.urls import reverse_lazy
 from django.test import TestCase
 from notes.models import Notes
+from notes.models import Upper 
 from notes.forms import NotesForm
 
 
-class NotesModelTestCase(TestCase):
+class UpperCaseModelTestCase(TestCase):
+
+    def test_string_representation(self):
+        value = 'Test UpPercaSe' 
+        note = Upper.objects.create(name=value)
+        print("This is the %s" %note.name)
+        self.assertEqual(value.upper(), note.name)
+
+
+class UpperModelTestCase(TestCase):
 
     def test_string_representation(self):
         note = Notes(name="Test Note")
