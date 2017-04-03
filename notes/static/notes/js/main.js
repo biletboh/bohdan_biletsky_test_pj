@@ -1,7 +1,9 @@
 $(function() {
 
   // File form field
-  initUploadFields($('#notes-form'));
+  //initUploadFields($('#notes-form'));
+
+  // Submit form
   $('#notes-form').on('submit', function(event){
     event.preventDefault();
     console.log("form submitted!")  // check
@@ -12,17 +14,29 @@ $(function() {
   function create_post() {
     console.log("create note is working!"); // check
     console.log($('#id_body').val());
+    var fileInput = $('#id_image');
+    var file = fileInput[0].files[0];
+    var formData = new FormData();
+    formData.append('file', file);
+
+    console.log(file)
     $.ajax({
       url : window.location.href, // the endpoint
       type : "POST", // http method
-      data : { name: $('#id_name').val(),
-        body: $('#id_body').val() }, // data sent with the post request
+      data : { 
+        name: $('#id_name').val(),
+        body: $('#id_body').val(),
+   //     image: formData,
+      }, // data sent with the post request
+      
+      //processData: false,  // tell jQuery not to process the data
+      //contentType: false,
 
       // handle a successful response
       success : function(json) {
         $('#id_name').val(''); // remove the value from the input
         $('#id_body').val(''); // remove the value from the input
-        $('#messages').html("<div class='alert alert-success'>The note was created!</div>"); // add the error to the dom
+        $('#messages').html("<div class='alert alert-success'>The note was created!</div>"); // add success message 
 
 
         console.log("success"); // another sanity check
