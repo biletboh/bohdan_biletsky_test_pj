@@ -1,11 +1,13 @@
 import datetime
+from unittest.mock import patch, MagicMock
 from django.urls import reverse
-from django.urls import reverse_lazy
 from django.test import TestCase
+from django.test import RequestFactory 
 from notes.models import Notes
 from notes.models import Upper 
 from notes.forms import NotesForm
 from notes.forms import UpperForm 
+from notes.views import CreateNotes
 
 
 class UpperCaseModelTestCase(TestCase):
@@ -68,41 +70,30 @@ class NotesCreateTestCase(TestCase):
 
     def setUp(self):
         self.form = NotesForm() 
+        self.factory = RequestFactory()
 
-    def test_create(self):
-        resp = self.client.get('/')
+    def test_get(self):
+        request = self.factory.get(reverse('notes:create_notes'))
+        resp = CreateNotes.as_view()(request)
         self.assertEqual(resp.status_code, 200)
 
+    @patch('notes.models.Notes.save', MagicMock(name="save"))
+    def test_post(self):
+        data = {
+                'name': 'The note test',
+                'body': 'This is the note test'
+                }
 
-class NotesUpdateTestCase(TestCase):
+        request = self.factory.post(
+                reverse('notes:create_notes'), data, 
+                HTTP_X_REQUESTED_WITH='XMLHttpRequest')
+        resp = CreateNotes.as_view()(request)
+        self.assertEqual(resp.status_code, 200)
+        self.assertTrue(Notes.save.called)
+        self.assertEqual(Notes.save.call_count, 1)
 
-    def setUp(self):
-        self.note_1 = Notes.objects.create(
-                name="first note",
-                body="This is the test for the notes",
-                pub_date=datetime.datetime.now())
 
+#class NotesUpdateTestCase(TestCase):
 
-    def test_update(self, **kwargs):
-# cannot solve a bug with kwargs
-#        resp = self.client.get(reverse('update_notes', kwargs={'pk':self.note_1.pk}))
-#        self.assertEqual(resp.status_code, 200)
-        pass
+#class NotesDeleteTestCase(TestCase):
 
-class NotesDeleteTestCase(TestCase):
-
-    def SetUp(self):
-        self.note_1 = Notes.objects.create(
-                name="first note",
-                body="This is the test for the notes",
-                pub_date=datetime.datetime.now())
-
-    def test_my_get_request(self):
-#        resp = self.client.get(reverse('update_notes', args=(self.note_1.pk), follow=True))
-#        self.assertContains(resp, 'Are you sure you want to remove') 
-        pass
-
-    def test_my_post_request(self):
-#        post_response = self.client.post(reverse('delete_notes', args=(self.note_1.id)), follow=True)
-#        self.assertRedirects(post_response, reverse('note_list'), status_code=302)
-        pass
