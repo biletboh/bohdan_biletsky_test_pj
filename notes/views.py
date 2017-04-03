@@ -42,7 +42,7 @@ class NotesList(ListView):
 class CreateNotes(AjaxableResponseMixin, FormView):
     template_name = 'notes/create_notes.html'
     form_class = NotesForm
-    success_url = '/'
+    success_url = '/create'
 
     def form_valid(self, form):
         note = Notes.objects.create(name=form.cleaned_data['name'], 
