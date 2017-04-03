@@ -1,5 +1,6 @@
 from django.db import models
 from django.utils import timezone
+from easy_thumbnails.fields import ThumbnailerImageField
 
 # Custom CharField class that transform the value to UPPER case. 
 
@@ -26,6 +27,7 @@ class Notes(models.Model):
     name = models.CharField(max_length=128)
     body = models.CharField(max_length=1024)
     pub_date = models.DateTimeField(default=timezone.datetime.now)
+    image = ThumbnailerImageField(upload_to='photos/notes', blank=True) 
 
     class Meta:
         ordering = ('-pub_date',)

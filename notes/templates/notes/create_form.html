@@ -1,20 +1,27 @@
 {% load widget_tweaks %}
-<form id="notes-form" action="" method="post">{% csrf_token %}
+<form id="notes-form" action="" method="post" enctype="multipart/form-data">{% csrf_token %}
   <div class="form-group">
-    {% csrf_token %}
-    {% for field in form %}
-
+    {%csrf_token%}
+    {%for field in form%}
+    {%if not field.is_hidden%}
     {{field.label_tag}}
+    {%endif%}
     {{ field|attr:"class:form-control form-custom"}}
-    {{ field.errors }}
-    {% endfor %}
-    {% if form.errors %}
+    {{field.errors}}
+    {%endfor%}
+    {%if form.errors%}
     <div class="form-group-item text-danger">
       Please enter valid data.
     </div>
-    {% endif %}
+    {%endif%}
   </div>
   <input type="submit" class="btn btn-primary" value="Submit" />
   <div id="messages">
   </div>
 </form>
+<script>
+$(function() {
+    initUploadFields($('#notes-form'));
+    });
+</script>
+{%include 'notes/upload_template.html'%}

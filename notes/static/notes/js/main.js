@@ -1,5 +1,7 @@
 $(function() {
 
+  // File form field
+  initUploadFields($('#notes-form'));
   $('#notes-form').on('submit', function(event){
     event.preventDefault();
     console.log("form submitted!")  // check

@@ -30,6 +30,9 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'widget_tweaks',
     'corsheaders',
+    'easy_thumbnails',
+    'django_file_form',
+    'django_file_form.ajaxuploader',
 ]
 
 MIDDLEWARE = [
@@ -132,3 +135,13 @@ STATICFILES_STORAGE = 'whitenoise.django.GzipManifestStaticFilesStorage'
 
 # Allow CORS
 CORS_ORIGIN_ALLOW_ALL = True
+
+#Tumnails settings 
+THUMBNAIL_ALIASES = {
+    '': {
+        'small': {'size':(60, 60), 'crop': True},
+        'medium': {'size': (750, 450), 'crop': True},
+        },
+    }
+THUMBNAIL_TRANSPARENCY_EXTENSION = 'png'
+
