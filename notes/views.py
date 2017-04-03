@@ -1,5 +1,8 @@
+import random
+from django.http import JsonResponse
 from django.shortcuts import render
 from django.http import JsonResponse
+from django.core import serializers
 from django.views.generic import ListView
 from django.views.generic import FormView 
 from django.views.generic import DeleteView 
@@ -73,3 +76,8 @@ class UpdateNotes(FormView):
 class DeleteNotes(DeleteView):
     model = Notes
     success_url = reverse_lazy('notes_list')
+
+def widget_view(request):
+    notes = Notes.objects.all()
+    note_json = serializers.serialize('json', notes) 
+    return JsonResponse(note_json, safe=False)
