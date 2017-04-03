@@ -8,6 +8,7 @@ from notes.models import Upper
 from notes.forms import NotesForm
 from notes.forms import UpperForm 
 from notes.views import CreateNotes
+from django.core.files import File
 
 
 class UpperCaseModelTestCase(TestCase):
@@ -51,9 +52,11 @@ class NotesListTestCase(TestCase):
 class NotesFormTestCase(TestCase):
 
     def test_valid_data(self):
+        file_mock = MagicMock(spec=File, name='FileMock')
         form = NotesForm({
             'name': "Test notes for all",
             'body': "Hi there. Thist is the test note",
+            'image': file_mock,
             })
         self.assertTrue(form.is_valid())
 
@@ -79,9 +82,11 @@ class NotesCreateTestCase(TestCase):
 
     @patch('notes.models.Notes.save', MagicMock(name="save"))
     def test_post(self):
+        file_mock = MagicMock(spec=File, name='FileMock')
         data = {
                 'name': 'The note test',
-                'body': 'This is the note test'
+                'body': 'This is the note test',
+                'image': file_mock, 
                 }
 
         request = self.factory.post(
