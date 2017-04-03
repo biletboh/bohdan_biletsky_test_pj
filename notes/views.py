@@ -46,7 +46,11 @@ class CreateNotes(AjaxableResponseMixin, FormView):
 
     def form_valid(self, form):
         note = Notes.objects.create(name=form.cleaned_data['name'], 
-                body=form.cleaned_data['body'])
+                body=form.cleaned_data['body'],
+                image=form.cleaned_data['image'])
+
+        form.delete_temporary_files()
+
         return super(CreateNotes, self).form_valid(form)
     
     def get_context_data(self, **kwargs):
