@@ -24,7 +24,7 @@ class UpperCaseCharField(models.CharField):
 
 class Notes(models.Model):
     name = models.CharField(max_length=128)
-    body = models.CharField(max_length=1024)
+    body = models.CharField(max_length=3036)
     pub_date = models.DateTimeField(default=timezone.datetime.now)
 
     class Meta:
@@ -34,8 +34,9 @@ class Notes(models.Model):
         return self.name
 
 
-class Upper(models.Model):
-    name = UpperCaseCharField(max_length=128)
+class Books(models.Model):
+    name = UpperCaseCharField(max_length=256)
+    notes = models.ManyToManyField(Notes)
 
     def __str__(self):
         return self.name
