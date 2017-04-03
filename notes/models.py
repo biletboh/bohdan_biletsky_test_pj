@@ -1,5 +1,8 @@
 from django.db import models
 from django.utils import timezone
+from django.db.models.signals import pre_delete, post_delete
+from django.dispatch import receiver
+
 
 # Custom CharField class that transform the value to UPPER case. 
 
@@ -42,4 +45,18 @@ class Books(models.Model):
         return self.name
 
 
+class Upper(models.Model):
+    name = UpperCaseCharField(max_length=256)
 
+    def __str__(self):
+        return self.name
+
+
+@receiver(pre_delete, sender=Notes)
+def delete_empty_books(sender, instance, **kwargs):
+    for book in instance.books_set.all():
+        try:
+            print(book.notes.all()[0])
+            book.notes.all()[1]
+        except:
+            book.delete()
