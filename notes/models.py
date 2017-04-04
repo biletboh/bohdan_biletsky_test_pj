@@ -51,6 +51,13 @@ class Upper(models.Model):
     def __str__(self):
         return self.name
 
+class HttpRequest(models.Model):
+    name = models.CharField(max_length=2024)
+
+    def __str__(self):
+        return self.name
+
+
 
 @receiver(pre_delete, sender=Notes)
 def delete_empty_books(sender, instance, **kwargs):
