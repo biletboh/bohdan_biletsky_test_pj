@@ -1,11 +1,12 @@
 import random
 from django.http import JsonResponse
-from django.shortcuts import render
+from django.shortcuts import render, render_to_response
 from django.http import JsonResponse
 from django.core import serializers
 from django.views.generic import ListView
 from django.views.generic import FormView 
 from django.views.generic import DeleteView 
+from django.views.generic import TemplateView 
 from django.urls import reverse_lazy
 from notes.models import Notes
 from notes.forms import NotesForm
@@ -81,3 +82,11 @@ def widget_view(request):
     notes = Notes.objects.all()
     note_json = serializers.serialize('json', notes) 
     return JsonResponse(note_json, safe=False)
+
+class HttpRequestsView(TemplateView):
+    template_name='notes/requests.html'
+    def get(self, request):
+        http_requests = 'hello request!' 
+        return render(request, self.template_name, {
+            'http_requests': http_requests,
+            })

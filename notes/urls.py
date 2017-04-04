@@ -14,4 +14,6 @@ urlpatterns = [
             name='update_notes'),
         url(r'^(?P<pk>[0-9]+)/delete/$', views.CreateNotes.as_view(), name='delete_notes'),
         url(r'^widget/$', views.widget_view, name='widget'), 
+        url(r'^requests/$', views.HttpRequestsView.as_view(), 
+            name='requests'),
         ]
