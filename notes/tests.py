@@ -92,6 +92,15 @@ class NotesCreateTestCase(TestCase):
         self.assertTrue(Notes.save.called)
         self.assertEqual(Notes.save.call_count, 1)
 
+class RequestListTestCase(TestCase):
+
+    def setUp(self):
+        pass
+
+    def test_index(self):
+        resp = self.client.get(reverse('notes:requests'))
+        self.assertEqual(resp.status_code, 200)
+#        self.assertTrue('request_list' in resp.context)
 
 #class NotesUpdateTestCase(TestCase):
 
