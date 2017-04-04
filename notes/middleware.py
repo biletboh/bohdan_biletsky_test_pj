@@ -35,7 +35,6 @@ class HttpRequestMiddleware(object):
                 req_headers.append((key, value))
                 if key == 'Content-Type':
                     req_content_type = value
-        print(request.META)
         request.request_message = HttpRequest.objects.create(
             time=timezone.now(),
             remote_addr=request.META['REMOTE_ADDR'],
