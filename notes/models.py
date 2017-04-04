@@ -55,8 +55,13 @@ class HttpRequest(models.Model):
     time = models.DateTimeField(blank=True, null=True)
     remote_addr = models.CharField(max_length=39, db_index=True)
     req_method = models.CharField(max_length=16)
+    req_protocol = models.CharField(max_length=16)
     req_path = models.TextField()
     req_headers_json = models.TextField()
+    
+    class Meta:
+        ordering = ('-time',)
+
 
 
 @receiver(pre_delete, sender=Notes)

@@ -3,7 +3,16 @@
 {%block content%}
 
 <div class="container box jumbotron">
-{{http_requests}}
+  <p>
+  {% for request in http_requests%}
+  <ul class="list-unstyled list-inline">
+    <li>{{request.pk}}</li>
+    <li>Request {{request.req_method}}</li>
+    <li>{{request.req_path}}{{request.req_protocol}}</li>
+    <li>{{request.time}}</li>
+  </ul>
+  {%endfor%}
+  </p>
 </div>
 
 {%endblock%}

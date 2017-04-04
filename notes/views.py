@@ -8,9 +8,10 @@ from django.views.generic import FormView
 from django.views.generic import DeleteView 
 from django.views.generic import TemplateView 
 from django.urls import reverse_lazy
-from notes.models import Notes
+from notes.models import Notes, HttpRequest
 from notes.forms import NotesForm
-
+from notes.signals import post_save_message_request 
+from notes.signals import post_save_message_response
 
 class AjaxableResponseMixin(object):
     """
@@ -85,8 +86,9 @@ def widget_view(request):
 
 class HttpRequestsView(TemplateView):
     template_name='notes/requests.html'
+
     def get(self, request):
-        http_requests = 'hello request!' 
+        http_requests = HttpRequest.objects.all()[0:10] 
         return render(request, self.template_name, {
             'http_requests': http_requests,
             })
