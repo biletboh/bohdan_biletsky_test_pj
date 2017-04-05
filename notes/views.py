@@ -6,11 +6,8 @@ from django.core import serializers
 from django.views.generic import ListView
 from django.views.generic import FormView 
 from django.views.generic import DeleteView 
-<<<<<<< HEAD
 from django.views.generic import TemplateView 
-=======
 from django.views.generic import View 
->>>>>>> widget
 from django.urls import reverse_lazy
 from notes.models import Notes, HttpRequest
 from notes.forms import NotesForm
