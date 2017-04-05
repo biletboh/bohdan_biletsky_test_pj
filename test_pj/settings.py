@@ -35,7 +35,7 @@ INSTALLED_APPS = [
     'django_file_form.ajaxuploader',
 ]
 
-MIDDLEWARE = [
+MIDDLEWARE_CLASSES = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'corsheaders.middleware.CorsMiddleware',
@@ -44,6 +44,9 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+
+    # Custom middleware that tracks requests
+    'notes.middleware.HttpRequestMiddleware',
 ]
 
 ROOT_URLCONF = 'test_pj.urls'

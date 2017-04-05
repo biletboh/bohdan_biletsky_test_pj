@@ -24,7 +24,6 @@ class UpperCaseModelTestCase(TestCase):
         self.assertTrue(form.is_valid())
 
 
-
 class UpperModelTestCase(TestCase):
 
     def test_string_representation(self):
@@ -98,7 +97,19 @@ class NotesCreateTestCase(TestCase):
         self.assertEqual(Notes.save.call_count, 1)
 
 
-#class NotesUpdateTestCase(TestCase):
+class RequestListTestCase(TestCase):
 
-#class NotesDeleteTestCase(TestCase):
+    def setUp(self):
+        pass
+
+    def test_index(self):
+        resp = self.client.get(reverse('notes:requests'))
+        self.assertEqual(resp.status_code, 200)
+#        self.assertTrue('request_list' in resp.context)
+
+
+# class NotesUpdateTestCase(TestCase):
+
+
+# class NotesDeleteTestCase(TestCase):
 

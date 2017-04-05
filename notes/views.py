@@ -1,10 +1,15 @@
-from django.shortcuts import render
+import random
+import json
 from django.http import JsonResponse
+from django.shortcuts import render 
+from django.core import serializers
 from django.views.generic import ListView
 from django.views.generic import FormView 
 from django.views.generic import DeleteView 
+from django.views.generic import TemplateView 
+from django.views.generic import View 
 from django.urls import reverse_lazy
-from notes.models import Notes
+from notes.models import Notes, HttpRequest
 from notes.forms import NotesForm
 
 
@@ -46,8 +51,8 @@ class CreateNotes(AjaxableResponseMixin, FormView):
 
     def form_valid(self, form):
         note = Notes.objects.create(name=form.cleaned_data['name'], 
-                body=form.cleaned_data['body'],
-                image=form.cleaned_data['image'])
+            body=form.cleaned_data['body'],
+            image=form.cleaned_data['image'])
 
         form.delete_temporary_files()
 
@@ -65,7 +70,9 @@ class UpdateNotes(FormView):
     success_url = '/'
 
     def form_valid(self, form):
-        note = Notes.objects.update(name=form.cleaned_data['name'], body=form.cleaned_data['body'])
+        note = Notes.objects.update(
+            name=form.cleaned_data['name'], 
+            body=form.cleaned_data['body'])
         return super(UpdateNotes, self).form_valid(form)
 
     def get_context_data(self, **kwargs):
@@ -77,3 +84,23 @@ class UpdateNotes(FormView):
 class DeleteNotes(DeleteView):
     model = Notes
     success_url = reverse_lazy('notes_list')
+
+
+class HttpRequestsView(TemplateView):
+    template_name = 'notes/requests.html'
+
+    def get(self, request):
+        http_requests = HttpRequest.objects.all()[0:10] 
+        http_requests_json = serializers.serialize('json', http_requests) 
+        if request.is_ajax():
+            return JsonResponse(http_requests_json, safe=False)
+        return render(request, self.template_name, {
+            'http_requests': http_requests_json,
+            })
+
+
+class WidgetView(View):
+    def get(self, request):
+        notes = Notes.objects.all()
+        note_json = serializers.serialize('json', notes) 
+        return JsonResponse(note_json, safe=False)

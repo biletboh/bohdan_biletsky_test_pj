@@ -2,7 +2,8 @@ from django.db import models
 from django.utils import timezone
 from easy_thumbnails.fields import ThumbnailerImageField
 
-# Custom CharField class that transform the value to UPPER case. 
+
+# Custom CharField class that transform the value to UPPER case.
 
 class UpperCaseCharField(models.CharField):
 
@@ -25,7 +26,7 @@ class UpperCaseCharField(models.CharField):
 
 class Notes(models.Model):
     name = models.CharField(max_length=128)
-    body = models.CharField(max_length=1024)
+    body = models.CharField(max_length=3036)
     pub_date = models.DateTimeField(default=timezone.datetime.now)
     image = ThumbnailerImageField(upload_to='photos/notes', blank=True) 
 
@@ -36,11 +37,29 @@ class Notes(models.Model):
         return self.name
 
 
-class Upper(models.Model):
-    name = UpperCaseCharField(max_length=128)
+class Books(models.Model):
+    name = UpperCaseCharField(max_length=256)
+    notes = models.ManyToManyField(Notes)
 
     def __str__(self):
         return self.name
 
 
+class Upper(models.Model):
+    name = UpperCaseCharField(max_length=256)
+
+    def __str__(self):
+        return self.name
+
+
+class HttpRequest(models.Model):
+    time = models.DateTimeField(blank=True, null=True)
+    remote_addr = models.CharField(max_length=39, db_index=True)
+    req_method = models.CharField(max_length=16)
+    req_protocol = models.CharField(max_length=16)
+    req_path = models.TextField()
+    req_headers_json = models.TextField()
+    
+    class Meta:
+        ordering = ('-time',)
 
