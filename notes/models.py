@@ -1,7 +1,5 @@
 from django.db import models
 from django.utils import timezone
-from django.db.models.signals import pre_delete, post_delete
-from django.dispatch import receiver
 
 
 # Custom CharField class that transform the value to UPPER case. 
@@ -51,6 +49,7 @@ class Upper(models.Model):
     def __str__(self):
         return self.name
 
+<<<<<<< HEAD
 class HttpRequest(models.Model):
     time = models.DateTimeField(blank=True, null=True)
     remote_addr = models.CharField(max_length=39, db_index=True)
@@ -62,13 +61,3 @@ class HttpRequest(models.Model):
     class Meta:
         ordering = ('-time',)
 
-
-
-@receiver(pre_delete, sender=Notes)
-def delete_empty_books(sender, instance, **kwargs):
-    for book in instance.books_set.all():
-        try:
-            print(book.notes.all()[0])
-            book.notes.all()[1]
-        except:
-            book.delete()
