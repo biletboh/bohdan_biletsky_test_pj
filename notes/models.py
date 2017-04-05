@@ -2,7 +2,7 @@ from django.db import models
 from django.utils import timezone
 
 
-# Custom CharField class that transform the value to UPPER case. 
+# Custom CharField class that transform the value to UPPER case.
 
 class UpperCaseCharField(models.CharField):
 
@@ -48,6 +48,7 @@ class Upper(models.Model):
 
     def __str__(self):
         return self.name
+
 
 class HttpRequest(models.Model):
     time = models.DateTimeField(blank=True, null=True)

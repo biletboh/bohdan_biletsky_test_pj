@@ -1,12 +1,7 @@
 import json
 import re
-import tempfile
-import uuid
 
 from django.conf import settings
-from django.core.exceptions import MiddlewareNotUsed
-from django.http import StreamingHttpResponse
-from django.http.cookie import SimpleCookie
 from django.utils import timezone
 import six
 

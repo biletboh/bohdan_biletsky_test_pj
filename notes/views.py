@@ -1,8 +1,7 @@
 import random
 import json
 from django.http import JsonResponse
-from django.http import HttpResponse
-from django.shortcuts import render, render_to_response
+from django.shortcuts import render 
 from django.core import serializers
 from django.views.generic import ListView
 from django.views.generic import FormView 
@@ -11,8 +10,7 @@ from django.views.generic import TemplateView
 from django.urls import reverse_lazy
 from notes.models import Notes, HttpRequest
 from notes.forms import NotesForm
-from notes.signals import post_save_message_request 
-from notes.signals import post_save_message_response
+
 
 class AjaxableResponseMixin(object):
     """
@@ -51,8 +49,9 @@ class CreateNotes(AjaxableResponseMixin, FormView):
     success_url = '/create'
 
     def form_valid(self, form):
-        note = Notes.objects.create(name=form.cleaned_data['name'], 
-                body=form.cleaned_data['body'])
+        note = Notes.objects.create(
+            name=form.cleaned_data['name'], 
+            body=form.cleaned_data['body'])
         return super(CreateNotes, self).form_valid(form)
     
     def get_context_data(self, **kwargs):
@@ -67,7 +66,9 @@ class UpdateNotes(FormView):
     success_url = '/'
 
     def form_valid(self, form):
-        note = Notes.objects.update(name=form.cleaned_data['name'], body=form.cleaned_data['body'])
+        note = Notes.objects.update(
+            name=form.cleaned_data['name'], 
+            body=form.cleaned_data['body'])
         return super(UpdateNotes, self).form_valid(form)
 
     def get_context_data(self, **kwargs):
@@ -88,7 +89,7 @@ def widget_view(request):
 
 
 class HttpRequestsView(TemplateView):
-    template_name='notes/requests.html'
+    template_name = 'notes/requests.html'
 
     def get(self, request):
         http_requests = HttpRequest.objects.all()[0:10] 
@@ -98,3 +99,4 @@ class HttpRequestsView(TemplateView):
         return render(request, self.template_name, {
             'http_requests': http_requests_json,
             })
+

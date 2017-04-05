@@ -22,3 +22,4 @@ def delete_empty_books(sender, instance, **kwargs):
             book.notes.all()[1]
         except:
             book.delete()
+
