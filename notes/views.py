@@ -6,7 +6,11 @@ from django.core import serializers
 from django.views.generic import ListView
 from django.views.generic import FormView 
 from django.views.generic import DeleteView 
+<<<<<<< HEAD
 from django.views.generic import TemplateView 
+=======
+from django.views.generic import View 
+>>>>>>> widget
 from django.urls import reverse_lazy
 from notes.models import Notes, HttpRequest
 from notes.forms import NotesForm
@@ -82,12 +86,6 @@ class DeleteNotes(DeleteView):
     success_url = reverse_lazy('notes_list')
 
 
-def widget_view(request):
-    notes = Notes.objects.all()
-    note_json = serializers.serialize('json', notes) 
-    return JsonResponse(note_json, safe=False)
-
-
 class HttpRequestsView(TemplateView):
     template_name = 'notes/requests.html'
 
@@ -100,3 +98,9 @@ class HttpRequestsView(TemplateView):
             'http_requests': http_requests_json,
             })
 
+
+class WidgetView(View):
+    def get(self, request):
+        notes = Notes.objects.all()
+        note_json = serializers.serialize('json', notes) 
+        return JsonResponse(note_json, safe=False)
