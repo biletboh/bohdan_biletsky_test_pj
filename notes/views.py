@@ -1,7 +1,8 @@
 import random
+import json
 from django.http import JsonResponse
+from django.http import HttpResponse
 from django.shortcuts import render, render_to_response
-from django.http import JsonResponse
 from django.core import serializers
 from django.views.generic import ListView
 from django.views.generic import FormView 
@@ -79,16 +80,21 @@ class DeleteNotes(DeleteView):
     model = Notes
     success_url = reverse_lazy('notes_list')
 
+
 def widget_view(request):
     notes = Notes.objects.all()
     note_json = serializers.serialize('json', notes) 
     return JsonResponse(note_json, safe=False)
+
 
 class HttpRequestsView(TemplateView):
     template_name='notes/requests.html'
 
     def get(self, request):
         http_requests = HttpRequest.objects.all()[0:10] 
+        http_requests_json = serializers.serialize('json', http_requests) 
+        if request.is_ajax():
+            return JsonResponse(http_requests_json, safe=False)
         return render(request, self.template_name, {
-            'http_requests': http_requests,
+            'http_requests': http_requests_json,
             })
