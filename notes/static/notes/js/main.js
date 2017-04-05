@@ -70,6 +70,27 @@ $(function() {
       !(/^(\/\/|http:|https:).*/.test(url));
   }
 
+  // Ajax for updating requests 
+  function update_request() {
+    console.log("update requests is working!"); // check
+    $.get('/requests/', function(http_requests_json) {
+      data = JSON.parse(http_requests_json);
+        update_page(data);
+    });
+  };
+  function update_page(data) {
+    $(data).each(function() {
+      var requests_html = '<p><ul class="list-unstyled list-inline"><li>' + this.pk +'</li><li>Request ' + this.fields.req_method + '</li><li>'+ this.fields.req_path + this.fields.req_protocol +'</li><li>' + this.fields.time + '</li></ul></p>'
+      $('#requests').append(requests_html);
+    });
+  };
+  
+  update_request();
+
+//setInterval(function(){
+ //   update_request()
+  //}, 1000);
+
   $.ajaxSetup({
     beforeSend: function(xhr, settings) {
       if (!csrfSafeMethod(settings.type) && sameOrigin(settings.url)) {
