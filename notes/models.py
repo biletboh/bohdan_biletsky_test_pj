@@ -28,7 +28,7 @@ class Notes(models.Model):
     name = models.CharField(max_length=128)
     body = models.CharField(max_length=3036)
     pub_date = models.DateTimeField(default=timezone.datetime.now)
-    image = ThumbnailerImageField(upload_to='photos/notes', blank=True) 
+    image = ThumbnailerImageField(upload_to='media/notes', blank=True) 
 
     class Meta:
         ordering = ('-pub_date',)
