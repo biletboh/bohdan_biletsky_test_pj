@@ -49,7 +49,6 @@ class Upper(models.Model):
     def __str__(self):
         return self.name
 
-<<<<<<< HEAD
 class HttpRequest(models.Model):
     time = models.DateTimeField(blank=True, null=True)
     remote_addr = models.CharField(max_length=39, db_index=True)
