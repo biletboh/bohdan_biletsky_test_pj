@@ -5,7 +5,7 @@
     $(function() {
 
       /******* Load HTML *******/
-      var jsonp_url = "http://cryptic-oasis-86413.herokuapp.com/widget/";
+      var jsonp_url = "https://cryptic-oasis-86413.herokuapp.com/widget/";
       console.log(jsonp_url);
       $.getJSON(jsonp_url, function(data) {
         data = JSON.parse(data);
