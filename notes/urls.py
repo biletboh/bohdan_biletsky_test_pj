@@ -13,5 +13,5 @@ urlpatterns = [
         url(r'^(?P<pk>[0-9]+)/update/$', views.UpdateNotes.as_view(), 
             name='update_notes'),
         url(r'^(?P<pk>[0-9]+)/delete/$', views.CreateNotes.as_view(), name='delete_notes'),
-        url(r'^widget/$', views.widget_view, name='widget'), 
+        url(r'^widget/$', views.WidgetView.as_view(), name='widget'), 
         ]
