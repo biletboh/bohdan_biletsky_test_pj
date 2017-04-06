@@ -9,7 +9,7 @@ $(function() {
     console.log("form submitted!")  // check
     create_notes();
   });
-
+  
   // Ajax for posting 
   function create_notes() {
     console.log("create note is working!"); // check
@@ -89,6 +89,30 @@ $(function() {
       !(/^(\/\/|http:|https:).*/.test(url));
   }
 
+  // Web Socket
+  ws_scheme = window.location.protocol == "https:" ? "wss" : "ws";
+  requests_socket = new ReconnectingWebSocket(ws_scheme + '://' + window.location.host + window.location.pathname);
+
+  $('#test').on('click', function(event){
+    var message = {
+      handle: 'hello',
+    message: 'test message',
+    }
+    requests_socket.send(JSON.stringify(message));
+//    return false;
+
+    console.log("test submitted!")  // check
+  });
+
+  requests_socket.onmessage = function(message) {
+    var data = JSON.parse(message.data);
+    $('#test').append('<tr>' 
+        + '<td>' + data.handle + '</td>'
+        + '<td>' + data.message + ' </td>'
+        + '</tr>');
+  };
+
+
   // Ajax for updating requests 
   function update_request() {
     console.log("update requests is working!"); // check
@@ -104,7 +128,7 @@ $(function() {
     });
   };
   
-  update_request();
+//  update_request();
 
 //setInterval(function(){
  //   update_request()
