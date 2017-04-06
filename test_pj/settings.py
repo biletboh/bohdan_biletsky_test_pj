@@ -33,6 +33,7 @@ INSTALLED_APPS = [
     'easy_thumbnails',
     'django_file_form',
     'django_file_form.ajaxuploader',
+    'channels'
 ]
 
 MIDDLEWARE_CLASSES = [
@@ -138,18 +139,30 @@ STATICFILES_STORAGE = 'whitenoise.django.GzipManifestStaticFilesStorage'
 
 # Media 
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+
 MEDIA_URL = '/photos/'
 
 
 # Allow CORS
 CORS_ORIGIN_ALLOW_ALL = True
 
-#Tumnails settings 
+# Tumnails settings 
 THUMBNAIL_ALIASES = {
     '': {
         'small': {'size':(60, 60), 'crop': True},
         'medium': {'size': (750, 450), 'crop': True},
         },
     }
+
 THUMBNAIL_TRANSPARENCY_EXTENSION = 'png'
 
+# Channel Layers with Redis
+CHANNEL_LAYERS = {
+    "default": {
+        "BACKEND": "asgi_redis.RedisChannelLayer",
+        "CONFIG": {
+            "hosts": [os.environ.get('REDIS_URL', 'redis://localhost:6379')],
+        },
+        "ROUTING": "notes.routing.channel_routing",
+    },
+}
