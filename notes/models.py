@@ -52,7 +52,7 @@ class Upper(models.Model):
         return self.name
 
 
-class HttpRequest(models.Model):
+class HttpRequestStorage(models.Model):
     time = models.DateTimeField(blank=True, null=True)
     remote_addr = models.CharField(max_length=39, db_index=True)
     req_method = models.CharField(max_length=16)

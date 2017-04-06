@@ -9,7 +9,7 @@ from django.views.generic import DeleteView
 from django.views.generic import TemplateView 
 from django.views.generic import View 
 from django.urls import reverse_lazy
-from notes.models import Notes, HttpRequest
+from notes.models import Notes, HttpRequestStorage
 from notes.forms import NotesForm
 
 
@@ -89,7 +89,7 @@ class HttpRequestsView(TemplateView):
     template_name = 'notes/requests.html'
 
     def get(self, request):
-        http_requests = HttpRequest.objects.all()[0:10] 
+        http_requests = HttpRequestStorage.objects.all()[0:10] 
         http_requests_json = serializers.serialize('json', http_requests) 
         if request.is_ajax():
             return JsonResponse(http_requests_json, safe=False)
