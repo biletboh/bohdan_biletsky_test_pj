@@ -6,9 +6,9 @@ from . import views
 app_name = 'notes'
 
 
+"""Patterns that maps notes views to urls."""
+
 urlpatterns = [
-        """Patterns that maps notes views to urls."""
-        
         url(r'^$', views.NotesList.as_view(), name='notes_list'),
         url(r'^create/$', views.CreateNotes.as_view(),
             name='create_notes'),
