@@ -6,6 +6,7 @@ from easy_thumbnails.fields import ThumbnailerImageField
 # Custom CharField class that transform the value to UPPER case.
 
 class UpperCaseCharField(models.CharField):
+    """Custom CharField that transforms input to UPPPERCASE."""
 
     description = "A field for UPPER case characters."
 
@@ -25,6 +26,7 @@ class UpperCaseCharField(models.CharField):
 
 
 class Notes(models.Model):
+    """The model for notes."""
     name = models.CharField(max_length=128)
     body = models.CharField(max_length=3036)
     pub_date = models.DateTimeField(default=timezone.datetime.now)
@@ -38,6 +40,7 @@ class Notes(models.Model):
 
 
 class Books(models.Model):
+    """The model for Books that store notes."""
     name = UpperCaseCharField(max_length=256)
     notes = models.ManyToManyField(Notes)
 
@@ -46,6 +49,7 @@ class Books(models.Model):
 
 
 class Upper(models.Model):
+    """The model that shows the usecase of custom UpperCaseCharField."""
     name = UpperCaseCharField(max_length=256)
 
     def __str__(self):
@@ -53,6 +57,7 @@ class Upper(models.Model):
 
 
 class HttpRequest(models.Model):
+    """The model that stores HttpRequests."""
     time = models.DateTimeField(blank=True, null=True)
     remote_addr = models.CharField(max_length=39, db_index=True)
     req_method = models.CharField(max_length=16)
