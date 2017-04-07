@@ -1,8 +1,9 @@
 import datetime
 from unittest.mock import patch, MagicMock
-from django.urls import reverse
+
 from django.test import TestCase
 from django.test import RequestFactory 
+from django.core.urlresolvers import reverse
 from notes.models import Notes
 from notes.models import Upper 
 from notes.forms import NotesForm
@@ -85,7 +86,7 @@ class NotesCreateTestCase(TestCase):
         data = {
                 'name': 'The note test',
                 'body': 'This is the note test',
-                'image': file_mock, 
+                'file': file_mock, 
                 }
 
         request = self.factory.post(
