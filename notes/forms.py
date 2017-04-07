@@ -1,6 +1,5 @@
 from django import forms
 from notes.models import Notes
-from notes.models import Upper
 
 
 class NotesForm(forms.Form):
@@ -14,12 +13,4 @@ class NotesForm(forms.Form):
             attrs={'placeholder': 'Write your note...', })
             )
     image = forms.FileField(label='image', required=False)
-
-
-class UpperForm(forms.ModelForm):
-    """The form that shows the use of UpperCaseCharField."""
-
-    class Meta:
-        model = Upper
-        fields = ['name']
 
