@@ -49,55 +49,6 @@ class NotesListTestCase(TestCase):
                 [notes.pk for notes in resp.context['notes_list']], [1])
 
 
-class NotesFormTestCase(TestCase):
-
-    def test_valid_data(self):
-        file_mock = MagicMock(spec=File, name='FileMock')
-        form = NotesForm({
-            'name': "Test notes for all",
-            'body': "Hi there. Thist is the test note",
-            'image': file_mock,
-            })
-        self.assertTrue(form.is_valid())
-
-    def test_blank_data(self):
-        form = NotesForm({})
-        self.assertFalse(form.is_valid())
-        self.assertEqual(form.errors, {
-            'name': ['This field is required.'],
-            'body': ['This field is required.'],
-            })
-
-        
-class NotesCreateTestCase(TestCase):
-
-    def setUp(self):
-        self.form = NotesForm() 
-        self.factory = RequestFactory()
-
-    def test_get(self):
-        request = self.factory.get(reverse('notes:create_notes'))
-        resp = CreateNotes.as_view()(request)
-        self.assertEqual(resp.status_code, 200)
-
-    @patch('notes.models.Notes.save', MagicMock(name="save"))
-    def test_post(self):
-        file_mock = MagicMock(spec=File, name='FileMock')
-        data = {
-                'name': 'The note test',
-                'body': 'This is the note test',
-                'file': file_mock, 
-                }
-
-        request = self.factory.post(
-                reverse('notes:create_notes'), data, 
-                HTTP_X_REQUESTED_WITH='XMLHttpRequest')
-        resp = CreateNotes.as_view()(request)
-        self.assertEqual(resp.status_code, 200)
-        self.assertTrue(Notes.save.called)
-        self.assertEqual(Notes.save.call_count, 1)
-
-
 class RequestListTestCase(TestCase):
 
     def setUp(self):
