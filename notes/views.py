@@ -8,7 +8,7 @@ from django.views.generic import FormView
 from django.views.generic import DeleteView 
 from django.views.generic import TemplateView 
 from django.views.generic import View 
-from django.urls import reverse_lazy
+from django.core.urlresolvers import reverse_lazy
 from notes.models import Notes, HttpRequest
 from notes.forms import NotesForm
 
