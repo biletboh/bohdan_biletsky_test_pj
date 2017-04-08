@@ -1,14 +1,7 @@
 import datetime
-from unittest.mock import patch, MagicMock
-
 from django.test import TestCase
-from django.test import RequestFactory 
 from django.core.urlresolvers import reverse
 from notes.models import Notes
-from notes.forms import NotesForm
-from notes.views import CreateNotes
-from django.core.files import File
-
 
 class NotesListTestCase(TestCase):
 
@@ -26,23 +19,4 @@ class NotesListTestCase(TestCase):
         self.assertEqual(
                 [notes.pk for notes in resp.context['notes_list']], [1])
 
-<<<<<<< HEAD
 
-class RequestListTestCase(TestCase):
-
-    def setUp(self):
-        pass
-
-    def test_index(self):
-        resp = self.client.get(reverse('notes:requests'))
-        self.assertEqual(resp.status_code, 200)
-#        self.assertTrue('request_list' in resp.context)
-
-
-# class NotesUpdateTestCase(TestCase):
-
-
-# class NotesDeleteTestCase(TestCase):
-
-=======
->>>>>>> 2-t1-create-app-that-shows-list-of-text-notes
