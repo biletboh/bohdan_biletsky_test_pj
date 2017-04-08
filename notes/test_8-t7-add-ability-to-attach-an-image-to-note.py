@@ -1,54 +1,16 @@
 import datetime
 from unittest.mock import patch, MagicMock
-from django.urls import reverse
+from django.core.urlresolvers import reverse
 from django.test import TestCase
 from django.test import RequestFactory 
 from notes.models import Notes
-from notes.models import Upper 
 from notes.forms import NotesForm
-from notes.forms import UpperForm 
 from notes.views import CreateNotes
 from django.core.files import File
 
 
-class UpperCaseModelTestCase(TestCase):
-
-    def test_string_representation(self):
-        value = 'Test UpPercaSe' 
-        note = Upper.objects.create(name=value)
-        self.assertEqual(value.upper(), note.name)
-    
-    def test_upper_form(self):
-        form_data = {'name': 'something'}
-        form = UpperForm(data=form_data)
-        self.assertTrue(form.is_valid())
-
-
-class UpperModelTestCase(TestCase):
-
-    def test_string_representation(self):
-        note = Notes(name="Test Note")
-        self.assertEqual(str(note), note.name)
-
-
-class NotesListTestCase(TestCase):
-
-    def setUp(self):
-        fixtures = ['first_notes.json']
-        note_1 = Notes.objects.create(
-                name="first note",
-                body="This is the test for the notes",
-                pub_date=datetime.datetime.now())
-
-    def test_index(self):
-        resp = self.client.get('/')
-        self.assertEqual(resp.status_code, 200)
-        self.assertTrue('notes_list' in resp.context)
-        self.assertEqual(
-                [notes.pk for notes in resp.context['notes_list']], [1])
-
-
 class NotesFormTestCase(TestCase):
+    """Test file form field in Notes Create Form."""
 
     def test_valid_data(self):
         file_mock = MagicMock(spec=File, name='FileMock')
@@ -67,8 +29,9 @@ class NotesFormTestCase(TestCase):
             'body': ['This field is required.'],
             })
 
-        
+
 class NotesCreateTestCase(TestCase):
+    """Test Notes Creat view fileform upload."""
 
     def setUp(self):
         self.form = NotesForm() 
@@ -85,7 +48,7 @@ class NotesCreateTestCase(TestCase):
         data = {
                 'name': 'The note test',
                 'body': 'This is the note test',
-                'image': file_mock, 
+                'file': file_mock, 
                 }
 
         request = self.factory.post(
@@ -95,21 +58,4 @@ class NotesCreateTestCase(TestCase):
         self.assertEqual(resp.status_code, 200)
         self.assertTrue(Notes.save.called)
         self.assertEqual(Notes.save.call_count, 1)
-
-
-class RequestListTestCase(TestCase):
-
-    def setUp(self):
-        pass
-
-    def test_index(self):
-        resp = self.client.get(reverse('notes:requests'))
-        self.assertEqual(resp.status_code, 200)
-#        self.assertTrue('request_list' in resp.context)
-
-
-# class NotesUpdateTestCase(TestCase):
-
-
-# class NotesDeleteTestCase(TestCase):
 

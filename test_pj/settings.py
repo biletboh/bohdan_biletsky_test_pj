@@ -31,8 +31,6 @@ INSTALLED_APPS = [
     'widget_tweaks',
     'corsheaders',
     'easy_thumbnails',
-    'django_file_form',
-    'django_file_form.ajaxuploader',
     'channels'
 ]
 
