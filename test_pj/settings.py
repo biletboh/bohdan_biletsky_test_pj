@@ -30,9 +30,10 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'widget_tweaks',
     'corsheaders',
+    'easy_thumbnails',
 ]
 
-MIDDLEWARE = [
+MIDDLEWARE_CLASSES = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'corsheaders.middleware.CorsMiddleware',
@@ -41,6 +42,9 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+
+    # Custom middleware that tracks requests
+    'notes.middleware.HttpRequestMiddleware',
 ]
 
 ROOT_URLCONF = 'test_pj.urls'
@@ -130,5 +134,20 @@ STATICFILES_DIRS = (
 STATICFILES_STORAGE = 'whitenoise.django.GzipManifestStaticFilesStorage'
 
 
+# Media 
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+MEDIA_URL = '/photos/'
+
+
 # Allow CORS
 CORS_ORIGIN_ALLOW_ALL = True
+
+#Tumnails settings 
+THUMBNAIL_ALIASES = {
+    '': {
+        'small': {'size':(60, 60), 'crop': True},
+        'medium': {'size': (750, 450), 'crop': True},
+        },
+    }
+THUMBNAIL_TRANSPARENCY_EXTENSION = 'png'
+

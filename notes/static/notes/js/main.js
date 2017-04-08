@@ -1,26 +1,45 @@
 $(function() {
 
+  // File form field
+  //initUploadFields($('#notes-form'));
+
+  // Submit form
   $('#notes-form').on('submit', function(event){
     event.preventDefault();
     console.log("form submitted!")  // check
-    create_post();
+    create_notes();
   });
 
   // Ajax for posting 
-  function create_post() {
+  function create_notes() {
     console.log("create note is working!"); // check
     console.log($('#id_body').val());
+    var name = $('#id_name').val();
+    var body = $('#id_body').val();
+    var fileInput = $('#id_image');
+    var file = fileInput[0].files[0];
+    var formData = new FormData();
+    
+    formData.append('file', file);
+    formData.append('name', name);
+    formData.append('body', body);
+
+    console.log(formData)
+    console.log(formData)
     $.ajax({
       url : window.location.href, // the endpoint
       type : "POST", // http method
-      data : { name: $('#id_name').val(),
-        body: $('#id_body').val() }, // data sent with the post request
+      data : formData, // data sent with the post request
+
+      processData: false,  // tell jQuery not to process the data
+      contentType: false,
 
       // handle a successful response
       success : function(json) {
         $('#id_name').val(''); // remove the value from the input
         $('#id_body').val(''); // remove the value from the input
-        $('#messages').html("<div class='alert alert-success'>The note was created!</div>"); // add the error to the dom
+        $('#id_image').val(''); // remove the value from the input
+        $('#messages').html("<div class='alert alert-success'>The note was created!</div>"); // add success message 
 
 
         console.log("success"); // another sanity check
@@ -69,6 +88,27 @@ $(function() {
       // or any other URL that isn't scheme relative or absolute i.e relative.
       !(/^(\/\/|http:|https:).*/.test(url));
   }
+
+  // Ajax for updating requests 
+  function update_request() {
+    console.log("update requests is working!"); // check
+    $.get('/requests/', function(http_requests_json) {
+      data = JSON.parse(http_requests_json);
+        update_page(data);
+    });
+  };
+  function update_page(data) {
+    $(data).each(function() {
+      var requests_html = '<p><ul class="list-unstyled list-inline"><li>' + this.pk +'</li><li>Request ' + this.fields.req_method + '</li><li>'+ this.fields.req_path + this.fields.req_protocol +'</li><li>' + this.fields.time + '</li></ul></p>'
+      $('#requests').append(requests_html);
+    });
+  };
+  
+  update_request();
+
+//setInterval(function(){
+ //   update_request()
+  //}, 1000);
 
   $.ajaxSetup({
     beforeSend: function(xhr, settings) {
