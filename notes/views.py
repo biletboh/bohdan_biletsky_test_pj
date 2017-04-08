@@ -40,9 +40,11 @@ class AjaxableResponseMixin(object):
             return response
 
 
+
 class NotesList(ListView):
     """View that render a List of notes.
     """
+
     model = Notes 
     template_name = 'notes/notes_list.html'
 
