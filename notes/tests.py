@@ -5,31 +5,9 @@ from django.test import TestCase
 from django.test import RequestFactory 
 from django.core.urlresolvers import reverse
 from notes.models import Notes
-from notes.models import Upper 
 from notes.forms import NotesForm
-from notes.forms import UpperForm 
 from notes.views import CreateNotes
 from django.core.files import File
-
-
-class UpperCaseModelTestCase(TestCase):
-
-    def test_string_representation(self):
-        value = 'Test UpPercaSe' 
-        note = Upper.objects.create(name=value)
-        self.assertEqual(value.upper(), note.name)
-    
-    def test_upper_form(self):
-        form_data = {'name': 'something'}
-        form = UpperForm(data=form_data)
-        self.assertTrue(form.is_valid())
-
-
-class UpperModelTestCase(TestCase):
-
-    def test_string_representation(self):
-        note = Notes(name="Test Note")
-        self.assertEqual(str(note), note.name)
 
 
 class NotesListTestCase(TestCase):
