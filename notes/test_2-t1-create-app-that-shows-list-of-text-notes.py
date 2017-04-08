@@ -1,16 +1,7 @@
 import datetime
-from unittest.mock import patch, MagicMock
-
 from django.test import TestCase
-from django.test import RequestFactory 
 from django.core.urlresolvers import reverse
 from notes.models import Notes
-from notes.models import Upper 
-from notes.forms import NotesForm
-from notes.forms import UpperForm 
-from notes.views import CreateNotes
-from django.core.files import File
-
 
 class NotesListTestCase(TestCase):
 
@@ -27,4 +18,5 @@ class NotesListTestCase(TestCase):
         self.assertTrue('notes_list' in resp.context)
         self.assertEqual(
                 [notes.pk for notes in resp.context['notes_list']], [1])
+
 
