@@ -19,9 +19,6 @@ def delete_empty_books(sender, instance, **kwargs):
     """Singal that deletes books without notes."""
 
     for book in instance.books_set.all():
-        try:
-            print(book.notes.all()[0])
-            book.notes.all()[1]
-        except:
+        if book.notes.count() == 1:
             book.delete()
 
