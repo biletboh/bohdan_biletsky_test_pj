@@ -1,4 +1,4 @@
-import random
+from random import randint 
 import json
 from django.http import JsonResponse
 from django.shortcuts import render 
@@ -129,6 +129,10 @@ class WidgetView(View):
     """
 
     def get(self, request):
-        notes = Notes.objects.all()
-        note_json = serializers.serialize('json', notes) 
+        notes = Notes.objects
+        count = notes.count()
+        random_index = randint(0, count-1)
+        random_note = notes.all()[random_index]
+        note_json = serializers.serialize('json', [random_note]) 
         return JsonResponse(note_json, safe=False)
+
