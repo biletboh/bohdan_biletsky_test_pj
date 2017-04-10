@@ -22,6 +22,7 @@ ALLOWED_HOSTS = ['*']
 
 INSTALLED_APPS = [
     'notes.apps.NotesConfig',
+    'chat.apps.ChatConfig',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -161,6 +162,6 @@ CHANNEL_LAYERS = {
         "CONFIG": {
             "hosts": [os.environ.get('REDIS_URL', 'redis://localhost:6379')],
         },
-        "ROUTING": "notes.routing.channel_routing",
+        "ROUTING": "chat.routing.channel_routing",
     },
 }
